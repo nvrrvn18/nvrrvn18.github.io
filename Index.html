@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profil Guru Pembuat Aplikasi Belajar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #eef1f4;
+    --surface: #ffffff;
+    --ink: #17232b;
+    --muted: #5a6b76;
+    --line: #d5dce2;
+    --teal: #0f5c63;
+    --teal-soft: #d9ecee;
+    --gold: #f0b429;
+    --h0: #e0e6ea;
+    --h1: #b6dadd;
+    --h2: #6fb5bb;
+    --h3: #2f8790;
+    --h4: #0f5c63;
+    --radius: 14px;
+    --display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+    --body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e171c; --surface: #15222a; --ink: #e8eef1; --muted: #94a7b1;
+      --line: #263742; --teal: #5fc2c9; --teal-soft: #1b3a40; --gold: #f5c04a;
+      --h0: #1d2d36; --h1: #1f4a50; --h2: #2a7a82; --h3: #46a9b1; --h4: #8fe0e5;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e171c; --surface: #15222a; --ink: #e8eef1; --muted: #94a7b1;
+    --line: #263742; --teal: #5fc2c9; --teal-soft: #1b3a40; --gold: #f5c04a;
+    --h0: #1d2d36; --h1: #1f4a50; --h2: #2a7a82; --h3: #46a9b1; --h4: #8fe0e5;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--body); font-size: 1rem; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+
+  .wrap {
+    max-width: 1120px; margin: 0 auto; padding: 32px 20px 64px;
+    display: grid; grid-template-columns: 300px minmax(0, 1fr);
+    gap: 40px; align-items: start;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .side { position: sticky; top: 32px; }
+  .avatar {
+    width: 100%; max-width: 260px; aspect-ratio: 1; border-radius: 50%;
+    border: 4px solid var(--surface); box-shadow: 0 0 0 3px var(--gold);
+    background: var(--teal); color: #fff; display: grid; place-items: center;
+    font-family: var(--display); font-weight: 800; font-size: 4.5rem; overflow: hidden;
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .name {
+    font-family: var(--display); font-weight: 800; font-size: 2rem;
+    line-height: 1.1; margin: 24px 0 2px; letter-spacing: -0.02em;
+  }
+  .handle { color: var(--muted); font-size: 1.05rem; margin: 0 0 14px; }
+  .bio { margin: 0 0 18px; }
+  .btn {
+    display: block; text-align: center; text-decoration: none; font-weight: 600;
+    padding: 10px 16px; border-radius: 10px; background: var(--gold); color: #2b1d00;
+    transition: transform .15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .facts { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 8px; color: var(--muted); font-size: .95rem; }
+  .facts a { text-decoration: none; }
+  .facts a:hover { color: var(--teal); text-decoration: underline; }
+  .facts svg { width: 16px; height: 16px; vertical-align: -3px; margin-right: 8px; fill: currentColor; }
+  .counts { display: flex; gap: 20px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .counts b { display: block; font-family: var(--display); font-size: 1.5rem; line-height: 1.1; }
+  .counts span { font-size: .85rem; color: var(--muted); }
+
+  /* ---------- Main ---------- */
+  .main { display: grid; gap: 28px; min-width: 0; }
+  .topbar { display: flex; justify-content: flex-end; }
+  .theme-btn {
+    font: inherit; font-size: .9rem; cursor: pointer; background: var(--surface); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px;
+  }
+  .theme-btn:hover { border-color: var(--teal); }
+
+  .hero h1 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(2.1rem, 5.2vw, 3.6rem); line-height: 1.04;
+    letter-spacing: -0.03em; margin: 0 0 16px; max-width: 18ch;
+  }
+  .hero p { font-size: 1.15rem; color: var(--muted); max-width: 58ch; margin: 0; }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  h2 { font-family: var(--display); font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 6px; }
+  .lead { color: var(--muted); margin: 0 0 18px; max-width: 60ch; }
+
+  /* Aplikasi belajar: elemen utama halaman ini */
+  .apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
+  .app {
+    display: flex; flex-direction: column; gap: 10px;
+    border: 1px solid var(--line); border-radius: 12px; padding: 18px; background: var(--surface);
+  }
+  .app h3 { margin: 0; font-family: var(--display); font-size: 1.15rem; word-break: break-word; }
+  .app p { margin: 0; color: var(--muted); font-size: .95rem; flex: 1; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { background: var(--teal-soft); color: var(--teal); font-size: .8rem; font-weight: 600; padding: 2px 10px; border-radius: 999px; }
+  .acts { display: flex; gap: 10px; align-items: center; margin-top: 4px; }
+  .try {
+    text-decoration: none; font-weight: 600; font-size: .92rem; padding: 7px 14px;
+    border-radius: 8px; background: var(--gold); color: #2b1d00;
+  }
+  .try:hover { filter: brightness(1.05); }
+  .code { font-size: .9rem; color: var(--teal); }
+  .stars { margin-left: auto; font-size: .85rem; color: var(--muted); }
+
+  /* Alur kerja: memang berurutan, jadi diberi nomor */
+  .steps { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; gap: 16px; }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+  .steps li::before {
+    content: counter(s); width: 36px; height: 36px; border-radius: 50%;
+    background: var(--gold); color: #2b1d00; font-family: var(--display); font-weight: 800;
+    display: grid; place-items: center;
+  }
+  .steps b { font-family: var(--display); display: block; }
+  .steps span { color: var(--muted); }
+
+  .principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin: 0; }
+  .principles dt { font-family: var(--display); font-weight: 700; margin-bottom: 4px; color: var(--teal); }
+  .principles dd { margin: 0; color: var(--muted); font-size: .96rem; }
+
+  .skills { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+  .skills li { background: var(--teal-soft); color: var(--teal); font-weight: 600; font-size: .92rem; padding: 6px 14px; border-radius: 999px; }
+
+  /* Peta aktivitas */
+  .heat-scroll { overflow-x: auto; padding-bottom: 6px; }
+  .heat { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 14px); grid-auto-columns: 14px; gap: 4px; width: max-content; }
+  .cell { border-radius: 4px; background: var(--h0); }
+  .cell[data-l="1"] { background: var(--h1); }
+  .cell[data-l="2"] { background: var(--h2); }
+  .cell[data-l="3"] { background: var(--h3); }
+  .cell[data-l="4"] { background: var(--h4); }
+  .heat-note { color: var(--muted); font-size: .88rem; margin: 12px 0 0; }
+
+  .timeline { list-style: none; margin: 0; padding: 0 0 0 18px; border-left: 2px solid var(--line); display: grid; gap: 18px; }
+  .timeline li { position: relative; }
+  .timeline li::before {
+    content: ""; position: absolute; left: -25px; top: 8px; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--gold); border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--gold);
+  }
+  .timeline b { font-family: var(--display); }
+  .timeline small { display: block; color: var(--muted); }
+
+  footer { color: var(--muted); font-size: .88rem; text-align: center; padding-top: 8px; }
+
+  @media (max-width: 860px) {
+    .wrap { grid-template-columns: 1fr; gap: 28px; padding-top: 20px; }
+    .side { position: static; display: grid; grid-template-columns: 120px 1fr; column-gap: 20px; align-items: center; }
+    .avatar { max-width: 120px; font-size: 2.5rem; grid-row: span 2; }
+    .name { font-size: 1.6rem; margin-top: 0; }
+    .side-rest { grid-column: 1 / -1; margin-top: 16px; }
+    .topbar { order: -1; }
+  }
+  @media (max-width: 480px) {
+    .card { padding: 18px; }
+    .apps { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <aside class="side">
+    <div class="avatar" id="avatar" aria-hidden="true"></div>
+    <div>
+      <h1 class="name" id="name"></h1>
+      <p class="handle" id="handle"></p>
+    </div>
+    <div class="side-rest">
+      <p class="bio" id="bio"></p>
+      <a class="btn" id="follow" target="_blank" rel="noopener">Lihat di GitHub</a>
+      <ul class="facts" id="facts"></ul>
+      <div class="counts" id="counts" hidden>
+        <div><b id="c-followers">0</b><span>pengikut</span></div>
+        <div><b id="c-following">0</b><span>mengikuti</span></div>
+        <div><b id="c-repos">0</b><span>repositori</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <button class="theme-btn" id="themeBtn" type="button">Ganti tema</button>
+    </div>
+
+    <section class="hero">
+      <h1 id="headline"></h1>
+      <p id="intro"></p>
+    </section>
+
+    <section class="card" aria-labelledby="h-apps">
+      <h2 id="h-apps">Aplikasi pembelajaran</h2>
+      <p class="lead">Semua aplikasi bisa dibuka langsung di browser, di HP maupun laptop, tanpa instalasi.</p>
+      <div class="apps" id="apps"></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-flow">
+      <h2 id="h-flow">Dari ide kelas sampai aplikasi</h2>
+      <p class="lead">Cara saya bekerja dengan asisten AI untuk membuat satu aplikasi.</p>
+      <ol class="steps" id="steps"></ol>
+    </section>
+
+    <section class="card" aria-labelledby="h-principles">
+      <h2 id="h-principles">Prinsip saya memakai AI</h2>
+      <p class="lead">AI mempercepat pembuatan, tetapi tanggung jawab atas isi tetap di guru.</p>
+      <dl class="principles" id="principles"></dl>
+    </section>
+
+    <section class="card" aria-labelledby="h-activity">
+      <h2 id="h-activity">Aktivitas membuat aplikasi</h2>
+      <p class="lead">Riwayat aktivitas GitHub 15 minggu terakhir.</p>
+      <div class="heat-scroll"><div class="heat" id="heat" role="img" aria-label="Peta aktivitas GitHub 15 minggu terakhir"></div></div>
+      <p class="heat-note" id="heatNote"></p>
+    </section>
+
+    <section class="card" aria-labelledby="h-skills">
+      <h2 id="h-skills">Alat yang saya pakai</h2>
+      <ul class="skills" id="skills"></ul>
+    </section>
+
+    <section class="card" aria-labelledby="h-journey">
+      <h2 id="h-journey">Perjalanan mengajar</h2>
+      <ul class="timeline" id="timeline"></ul>
+    </section>
+
+    <footer>Dibuat dengan HTML, CSS, JavaScript, dan bantuan AI.</footer>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   UBAH BAGIAN INI SAJA
+   ============================================================ */
+const CONFIG = {
+  username: "nvrrvn18",          // username GitHub (tanpa @)
+  name: "Nama Guru Anda",
+  role: "Guru [Mata Pelajaran]",
+  school: "Nama Sekolah Anda",
+  location: "Indonesia",
+  email: "email@contoh.com",
+  website: "https://username-anda.github.io",
+  bio: "Guru yang membuat alat bantu belajar sendiri dengan bantuan AI.",
+  headline: "Saya mengajar, lalu membuat aplikasi yang dibutuhkan kelas saya.",
+  intro: "Saya guru yang memanfaatkan AI untuk menulis kode HTML, CSS, dan JavaScript. Dari kuis interaktif sampai kartu kosakata, setiap aplikasi lahir dari kebutuhan nyata di kelas dan dibuka gratis untuk siapa saja.",
+
+  // Aplikasi unggulan. Bila username diisi, repositori GitHub terpopuler
+  // akan menggantikan daftar ini. Isi "demo" dengan tautan GitHub Pages.
+  apps: [
+    { name: "Kuis Cepat", description: "Latihan pilihan ganda dengan skor dan pembahasan di setiap soal.", mapel: "Mata pelajaran", jenjang: "Kelas X", demo: "#", url: "#" },
+    { name: "Kartu Kosakata", description: "Kartu bolak-balik untuk menghafal istilah, bisa diacak.", mapel: "Mata pelajaran", jenjang: "Kelas X", demo: "#", url: "#" },
+    { name: "Penghitung Nilai", description: "Alat bantu guru untuk merekap nilai dan melihat rata-rata kelas.", mapel: "Alat guru", jenjang: "Semua kelas", demo: "#", url: "#" }
+  ],
+
+  steps: [
+    { title: "Tentukan tujuan pembelajaran", note: "Saya mulai dari apa yang harus dikuasai siswa, bukan dari fitur aplikasi." },
+    { title: "Minta AI membuat draf", note: "Saya jelaskan kebutuhan, jenjang siswa, dan tampilan yang diinginkan, lalu AI menulis kodenya." },
+    { title: "Periksa isi dan coba sendiri", note: "Saya cek kebenaran materi, jawaban, dan kemudahan pakai sebelum dibagikan." },
+    { title: "Uji di kelas, lalu perbaiki", note: "Respons siswa menunjukkan bagian yang membingungkan, dan saya minta AI merevisinya." },
+    { title: "Publikasikan lewat GitHub Pages", note: "Aplikasi mendapat tautan yang bisa dibuka siswa dari perangkat apa pun." }
+  ],
+
+  principles: [
+    { title: "Isi materi saya periksa", note: "AI membantu menulis kode, sedangkan kebenaran materi dan soal saya pastikan sendiri." },
+    { title: "Kode terbuka", note: "Siapa pun boleh membaca, memakai, dan mengubah aplikasi untuk kelasnya." },
+    { title: "Sederhana untuk siswa", note: "Satu aplikasi untuk satu tujuan belajar, dengan tampilan yang jelas di layar HP." }
+  ],
+
+  skills: ["HTML", "CSS", "JavaScript", "GitHub Pages", "Git", "Asisten AI", "Desain pembelajaran", "Penilaian formatif"],
+
+  journey: [
+    { title: "Mulai mengajar", note: "Tahun 20XX" },
+    { title: "Mencoba AI untuk membuat aplikasi pertama", note: "Tahun 20XX" },
+    { title: "Aplikasi dipakai di kelas dan dibagikan ke rekan guru", note: "Tahun 20XX sampai sekarang" }
+  ]
+};
+/* ============================================================ */
+
+const $ = (id) => document.getElementById(id);
+const hasUser = CONFIG.username && CONFIG.username !== "username-anda";
+const profileUrl = `https://github.com/${CONFIG.username}`;
+
+function el(tag, attrs = {}, children = []) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "text") n.textContent = v; else n.setAttribute(k, v);
+  }
+  [].concat(children).forEach((c) => n.append(c));
+  return n;
+}
+
+/* ---- Identitas ---- */
+document.title = `${CONFIG.name} | ${CONFIG.role}`;
+$("name").textContent = CONFIG.name;
+$("handle").textContent = CONFIG.role;
+$("bio").textContent = CONFIG.bio;
+$("headline").textContent = CONFIG.headline;
+$("intro").textContent = CONFIG.intro;
+$("follow").href = profileUrl;
+
+const avatar = $("avatar");
+avatar.textContent = CONFIG.name.trim().charAt(0).toUpperCase();
+if (hasUser) {
+  const img = new Image();
+  img.alt = "";
+  img.onload = () => { avatar.textContent = ""; avatar.append(img); };
+  img.src = `https://github.com/${CONFIG.username}.png?size=400`;
+}
+
+const icons = {
+  school: "M8 1 0 5l8 4 6-3v5h1.5V5L8 1ZM3 9v3c0 1 2.2 2 5 2s5-1 5-2V9l-5 2.5L3 9Z",
+  pin: "M8 0a5 5 0 0 0-5 5c0 3.5 5 11 5 11s5-7.5 5-11a5 5 0 0 0-5-5Zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z",
+  mail: "M1 3h14v10H1V3Zm1.5 1.5L8 8.5l5.5-4H2.5Z",
+  link: "M7 3h6v6h-1.5V5.6L6.5 10.6 5.4 9.5l5-5H7V3ZM2 4h3v1.5H3.5v7h7V11H12v3H2V4Z"
+};
+function fact(icon, text, href) {
+  const li = el("li");
+  li.insertAdjacentHTML("afterbegin", `<svg viewBox="0 0 16 16" aria-hidden="true"><path d="${icons[icon]}"/></svg>`);
+  if (href) li.append(el("a", { href, text, target: "_blank", rel: "noopener" }));
+  else li.append(document.createTextNode(text));
+  $("facts").append(li);
+}
+if (CONFIG.school) fact("school", CONFIG.school);
+if (CONFIG.location) fact("pin", CONFIG.location);
+if (CONFIG.email) fact("mail", CONFIG.email, "mailto:" + CONFIG.email);
+if (CONFIG.website) fact("link", CONFIG.website.replace(/^https?:\/\//, ""), CONFIG.website);
+
+/* ---- Bagian statis ---- */
+CONFIG.steps.forEach((s) =>
+  $("steps").append(el("li", {}, [el("div", {}, [el("b", { text: s.title }), el("span", { text: s.note })])]))
+);
+CONFIG.principles.forEach((p) => {
+  const box = el("div", {}, [el("dt", { text: p.title }), el("dd", { text: p.note })]);
+  $("principles").append(box);
+});
+CONFIG.skills.forEach((s) => $("skills").append(el("li", { text: s })));
+CONFIG.journey.forEach((j) =>
+  $("timeline").append(el("li", {}, [el("b", { text: j.title }), el("small", { text: j.note })]))
+);
+
+/* ---- Aplikasi ---- */
+function safeUrl(u) { return /^(https?:\/\/|#)/.test(u || "") ? u : "#"; }
+
+function renderApps(list) {
+  const box = $("apps");
+  box.textContent = "";
+  list.forEach((a) => {
+    const tags = el("div", { class: "tags" });
+    [a.mapel, a.jenjang].concat(a.topics || []).filter(Boolean).forEach((t) => tags.append(el("span", { class: "tag", text: t })));
+    const acts = el("div", { class: "acts" });
+    if (a.demo && a.demo !== "#") acts.append(el("a", { class: "try", href: safeUrl(a.demo), target: "_blank", rel: "noopener", text: "Coba aplikasi" }));
+    acts.append(el("a", { class: "code", href: safeUrl(a.url), target: "_blank", rel: "noopener", text: "Lihat kode" }));
+    if (typeof a.stars === "number") acts.append(el("span", { class: "stars", text: "★ " + a.stars }));
+    box.append(el("article", { class: "app" }, [
+      el("h3", { text: a.name }),
+      tags,
+      el("p", { text: a.description || "Belum ada deskripsi." }),
+      acts
+    ]));
+  });
+}
+renderApps(CONFIG.apps);
+
+/* ---- Peta aktivitas ---- */
+const WEEKS = 15;
+function buildHeat(counts) {
+  const heat = $("heat");
+  heat.textContent = "";
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const start = new Date(today);
+  start.setDate(today.getDate() - (WEEKS * 7 - 1) - today.getDay());
+  let sum = 0;
+  for (let i = 0; i < (WEEKS + 1) * 7; i++) {
+    const d = new Date(start);
+    d.setDate(start.getDate() + i);
+    if (d > today) break;
+    const key = d.toISOString().slice(0, 10);
+    const c = counts[key] || 0;
+    sum += c;
+    const level = c === 0 ? 0 : c < 2 ? 1 : c < 4 ? 2 : c < 7 ? 3 : 4;
+    heat.append(el("div", { class: "cell", "data-l": level, title: `${key}: ${c} aktivitas` }));
+  }
+  return sum;
+}
+buildHeat({});
+$("heatNote").textContent = hasUser
+  ? "Memuat aktivitas dari GitHub..."
+  : "Isi username GitHub pada CONFIG agar peta ini menampilkan aktivitas Anda.";
+
+/* ---- Data langsung dari GitHub ---- */
+async function loadGitHub() {
+  if (!hasUser) return;
+  const api = `https://api.github.com/users/${encodeURIComponent(CONFIG.username)}`;
+  try {
+    const [u, repos, events] = await Promise.all([
+      fetch(api).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+      fetch(api + "/repos?per_page=100&sort=updated").then((r) => r.ok ? r.json() : []),
+      fetch(api + "/events/public?per_page=100").then((r) => r.ok ? r.json() : [])
+    ]);
+
+    if (u.bio) $("bio").textContent = u.bio;
+    $("c-followers").textContent = u.followers;
+    $("c-following").textContent = u.following;
+    $("c-repos").textContent = u.public_repos;
+    $("counts").hidden = false;
+
+    const top = repos
+      .filter((r) => !r.fork)
+      .sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.pushed_at) - new Date(a.pushed_at))
+      .slice(0, 6)
+      .map((r) => ({
+        name: r.name,
+        description: r.description,
+        topics: (r.topics || []).slice(0, 3),
+        stars: r.stargazers_count,
+        url: r.html_url,
+        demo: r.homepage || ""   // isi kolom "Website" di repositori dengan tautan GitHub Pages
+      }));
+    if (top.length) renderApps(top);
+
+    const counts = {};
+    events.forEach((e) => {
+      const key = e.created_at.slice(0, 10);
+      const n = e.type === "PushEvent" && e.payload && e.payload.size ? e.payload.size : 1;
+      counts[key] = (counts[key] || 0) + n;
+    });
+    const sum = buildHeat(counts);
+    $("heatNote").textContent = events.length
+      ? `${sum} aktivitas publik terbaru. API publik GitHub hanya menyediakan sekitar 90 hari terakhir.`
+      : "Belum ada aktivitas publik yang bisa ditampilkan.";
+  } catch (err) {
+    $("heatNote").textContent = "Data GitHub tidak bisa dimuat (username salah atau batas permintaan tercapai). Menampilkan data bawaan.";
+  }
+}
+loadGitHub();
+
+/* ---- Tema ---- */
+const root = document.documentElement;
+$("themeBtn").addEventListener("click", () => {
+  const dark = getComputedStyle(root).getPropertyValue("--bg").trim() === "#0e171c";
+  root.setAttribute("data-theme", dark ? "light" : "dark");
+});
+</script>
+</body>
+</html>
